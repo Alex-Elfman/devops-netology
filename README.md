@@ -13,3 +13,4 @@ Hello, Netology!)
 11) Любые файлы заканчивающиеся на _override.tf.json.
 12) Файл .terraformrc.
 13) Файл terraform.rc.
+version_2
