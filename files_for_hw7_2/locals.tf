@@ -1,7 +1,8 @@
 locals {
-    web = "${var.vm_web_web}"
+  org      = "netology"
+  project  = "develop"
+  instance = "platform" 
  }
 
-locals {
-     db = "${var.vm_web_db}"
-}
+name = "${ local.org }-${ local.project }-${ local.instance }-web"
+name = "${ local.org }-${ local.project }-${ local.instance }-db"
