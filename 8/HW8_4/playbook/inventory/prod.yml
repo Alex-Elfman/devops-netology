@@ -1,0 +1,21 @@
+---
+clickhouse:
+  hosts:
+    study-0:
+      ansible_user: centos
+      ansible_ssh_private_key_file: ~/.ssh/yc
+      ansible_host: 158.160.98.98
+
+vector:
+  hosts:
+    study-1:
+      ansible_user: centos
+      ansible_ssh_private_key_file: ~/.ssh/yc
+      ansible_host: 158.160.124.35
+
+lighthouse:
+  hosts:
+    study-2:
+      ansible_user: centos
+      ansible_ssh_private_key_file: ~/.ssh/yc
+      ansible_host: 51.250.94.156
