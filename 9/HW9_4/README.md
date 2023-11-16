@@ -110,8 +110,8 @@ Finished: SUCCESS
 8. Отправить ссылку на репозиторий с ролью и Declarative Pipeline и Scripted Pipeline.
 
  [Vector-role](https://github.com/Alex-Elfman/devops-netology/tree/main/8/HW8_5/playbook/roles/vector-role)  
- [Declarative pipeline](https://github.com/Alex-Elfman/devops-netology/tree/main/9/HW_4/Jenkinsfile)  
- [Scripted Pipeline](https://github.com/Alex-Elfman/devops-netology/tree/main/9/HW_4/ScriptedJenkinsfile)  
+ [Declarative pipeline](https://github.com/Alex-Elfman/devops-netology/blob/main/9/HW9_4/Jenkinsfile)  
+ [Scripted Pipeline](https://github.com/Alex-Elfman/devops-netology/blob/main/9/HW9_4/ScriptedJenkinsfile)  
 
 9. Сопроводите процесс настройки скриншотами для каждого пункта задания!!
 
