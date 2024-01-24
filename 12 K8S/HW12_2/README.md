@@ -134,13 +134,35 @@ spec:
 
 после ввода команды в другом терминале `curl localhost:8081`
 
-выходит следующая ошибка в обоих терминалах
+После исправления порта на 8080 процесс пошел. Спасибо за подсказку!
 
-![img_10.png](img_10.png)
+Изменил конфиг:
 
-![img_11.png](img_11.png)
+apiVersion: v1  
+kind: Service  
+metadata:  
+  name: netology-svc  
+  namespace: default  
+spec:  
+  ports:  
+    - protocol: TCP  
+      port: 8080  
+  selector:  
+     app: myapp
 
-В чем может быть проблема?
+Применил изменения
+
+`kubectl apply -f netology-svc.yaml`
+
+Сделал проброс `kubectl port-forward services/netology-svc 8081:8080`
+![img_12.png](img_12.png)
+
+Получил результат
+`curl 127.0.0.1:8081`
+
+![img_13.png](img_13.png)
+
+![img_14.png](img_14.png)
 
 ------
 
