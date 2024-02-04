@@ -209,7 +209,38 @@ spec:
 
 ![img_13.png](img_13.png)
 
+## Доработка
 
+После возврата на доработку изменил манифест Deployment_nginx.yaml
+
+![img_14.png](img_14.png)
+
+apiVersion: apps/v1  
+kind: Deployment  
+metadata:  
+  name: dpl-nginx-init  
+  namespace: default  
+spec:  
+  replicas: 1  
+  selector:  
+    matchLabels:  
+      app: web-init  
+  template:  
+    metadata:  
+      labels:  
+        app: web-init  
+    spec:  
+      containers:  
+      - name: nginx  
+        image: nginx:1.19.2  
+      initContainers:  
+      - name: init-busybox  
+        image: busybox  
+        command: [ 'sh', '-c', "until nslookup svc-nginx-init.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for myservice; sleep 2; done"]
+
+![img_15.png](img_15.png)
+
+Пока службу не перезапустил, под был в ожидании. После перезапуска, запустился
 
 ------
 
