@@ -36,6 +36,171 @@ Spec:
 
 ![img_9.png](img_9.png)
 
+Тоже самое сделал и с остальными манифестами, результат такой же
+
+```commandline
+alex@DESKTOP-SOTHBR6:~/k8s/hw13_3$ kubectl describe networkpolicy -n app
+Name:         backend
+Namespace:    app
+Created on:   2024-03-07 09:07:45 +0500 +05
+Labels:       <none>
+Annotations:  <none>
+Spec:
+  PodSelector:     app=backend
+  Allowing ingress traffic:
+    To Port: 80/TCP
+    From:
+      PodSelector: app=frontend
+  Allowing egress traffic:
+    To Port: 80/TCP
+    To: <any> (traffic not restricted by destination)
+  Policy Types: Ingress, Egress
+
+
+Name:         cache
+Namespace:    app
+Created on:   2024-03-07 09:08:11 +0500 +05
+Labels:       <none>
+Annotations:  <none>
+Spec:
+  PodSelector:     app=cache
+  Allowing ingress traffic:
+    To Port: 80/TCP
+    From:
+      PodSelector: app=backend
+  Allowing egress traffic:
+    To Port: 80/TCP
+    To: <any> (traffic not restricted by destination)
+  Policy Types: Ingress, Egress
+
+
+Name:         default-deny-ingress
+Namespace:    app
+Created on:   2024-03-06 18:58:57 +0500 +05
+Labels:       <none>
+Annotations:  <none>
+Spec:
+  PodSelector:     <none> (Allowing the specific traffic to all pods in this namespace)
+  Allowing ingress traffic:
+    <none> (Selected pods are isolated for ingress connectivity)
+  Allowing egress traffic:
+    <none> (Selected pods are isolated for egress connectivity)
+  Policy Types: Ingress, Egress
+
+
+Name:         frontend
+Namespace:    app
+Created on:   2024-03-07 09:06:37 +0500 +05
+Labels:       <none>
+Annotations:  <none>
+Spec:
+  PodSelector:     app=frontend
+  Allowing ingress traffic:
+    <none> (Selected pods are isolated for ingress connectivity)
+  Allowing egress traffic:
+    <none> (Selected pods are isolated for egress connectivity)
+  Policy Types: Ingress, Egress
+```
+
+Манифесты
+
+np_default.yml
+
+```
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-ingress
+  namespace: app
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+    - Egress
+```
+
+np_frontend.yml
+
+```commandline
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: frontend
+  namespace: app
+spec:
+  podSelector:
+    matchLabels:
+      app: frontend
+  policyTypes:
+    - Ingress
+    - Egress
+```
+
+np_backend.yml
+
+```commandline
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: backend
+  namespace: app
+spec:
+  podSelector:
+    matchLabels:
+      app: backend
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+            app: frontend
+      ports:
+        - protocol: TCP
+          port: 80
+  egress:
+    - to:
+      ports:
+        - protocol: TCP
+          port: 80
+```
+
+np_cache.yml
+
+```commandline
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: cache
+  namespace: app
+spec:
+  podSelector:
+    matchLabels:
+      app: cache
+  policyTypes:
+      - Ingress
+      - Egress
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+            app: backend
+      ports:
+        - protocol: TCP
+          port: 80
+
+  egress:
+    - to:
+      ports:
+       - protocol: TCP
+         port: 80
+```
+
+
+
+![img_10.png](img_10.png)
+
 # Домашнее задание к занятию «Как работает сеть в K8s»
 
 ### Цель задания
