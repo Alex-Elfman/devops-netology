@@ -1,3 +1,41 @@
+## Доработка
+
+Добавил правило egress в политики по умолчанию. По идее все входящие и исходящие запрещены
+
+```
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-ingress
+  namespace: app
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+    - Egress
+```
+Проверяю действующие политики
+`kubectl describe networkpolicy -n app`
+
+```commandline
+Name:         default-deny-ingress
+Namespace:    app
+Created on:   2024-03-06 18:58:57 +0500 +05
+Labels:       <none>
+Annotations:  <none>
+Spec:
+  PodSelector:     <none> (Allowing the specific traffic to all pods in this namespace)
+  Allowing ingress traffic:
+    <none> (Selected pods are isolated for ingress connectivity)
+  Allowing egress traffic:
+    <none> (Selected pods are isolated for egress connectivity)
+  Policy Types: Ingress, Egress
+```
+
+Но при подключении с фронта на бэк и обратно с бэка на фронт все ходит, хотя не должно.
+
+![img_9.png](img_9.png)
+
 # Домашнее задание к занятию «Как работает сеть в K8s»
 
 ### Цель задания
