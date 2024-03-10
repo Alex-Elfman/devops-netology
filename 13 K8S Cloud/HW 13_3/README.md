@@ -1,5 +1,81 @@
 ## Доработка
 
+1. Пробую перезапустить кластер
+
+```commandline
+alex@DESKTOP-SOTHBR6:~/k8s/hw13_3$ minikube stop
+✋  Stopping node "minikube"  ...
+❗  Executing "docker container inspect minikube --format={{.State.Status}}" took an unusually long time: 2.168464286s
+💡  Restarting the docker service may improve performance.
+🛑  Powering off "minikube" via SSH ...
+🛑  1 node stopped.
+alex@DESKTOP-SOTHBR6:~/k8s/hw13_3$ minikube start --network-plugin=cni
+😄  minikube v1.32.0 on Ubuntu 22.04 (amd64)
+✨  Using the docker driver based on existing profile
+👍  Starting control plane node minikube in cluster minikube
+🚜  Pulling base image ...
+🔄  Restarting existing docker container for "minikube" ...
+🐳  Preparing Kubernetes v1.28.3 on Docker 24.0.7 ...
+🔗  Configuring Calico (Container Networking Interface) ...
+🔎  Verifying Kubernetes components...
+    ▪ Using image registry.k8s.io/ingress-nginx/kube-webhook-certgen:v20231011-8b53cabe0
+    ▪ Using image gcr.io/k8s-minikube/minikube-ingress-dns:0.0.2
+    ▪ Using image registry.k8s.io/ingress-nginx/kube-webhook-certgen:v20231011-8b53cabe0
+    ▪ Using image registry.k8s.io/ingress-nginx/controller:v1.9.4
+    ▪ Using image gcr.io/k8s-minikube/storage-provisioner:v5
+🔎  Verifying ingress addon...
+🌟  Enabled addons: storage-provisioner, ingress-dns, default-storageclass, ingress
+🏄  Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
+```
+
+2. Проверяю политики и Calico
+
+![img_14.png](img_14.png)
+
+![img_15.png](img_15.png)
+
+3. Проверяю доступ, доступ есть, несмотря на запреты
+
+![img_16.png](img_16.png)
+
+![img_17.png](img_17.png)
+
+4. Удаляю Calico и проверяю
+
+`kubectl delete -f https://raw.githubusercontent.com/projectcalico/calico/v3.27.2/m
+anifests/calico.yaml`
+
+![img_18.png](img_18.png)
+
+![img_19.png](img_19.png)
+
+Calico удален
+
+5. Заново устанавливаю
+
+```commandline
+kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.27.2/ma
+nifests/calico.yaml
+```
+
+![img_20.png](img_20.png)
+
+![img_21.png](img_21.png)
+
+Calico установлен. На всякий случай перезапускаю сетевые политики
+
+![img_22.png](img_22.png)
+
+6. Проверяю доступ до бэка и фронта с кеша, и с бэка до фронта, по полтитикам все это запрещено.
+
+![img_23.png](img_23.png)
+
+Доступ есть, сетевые политики не отработали.
+
+
+
+### Доработка 1
+
 Добавил правило egress в политики по умолчанию. По идее все входящие и исходящие запрещены
 
 ```
