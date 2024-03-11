@@ -1,5 +1,32 @@
 ## Доработка
 
+Оставляем только Egress
+
+Внес правки только в фронтенд. Но все равное не работает, думаю с остальными конфигурациями будет также. Есть ли необходимость и остальные проверять?
+
+```commandline
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: frontend
+  namespace: app
+spec:
+  podSelector:
+  policyTypes:
+    #    - Ingress
+    - Egress
+  egress:
+    - to:
+      - podSelector:
+          matchLabels:
+            app: backend
+      ports:
+        - protocol: TCP
+          port: 80                
+```
+
+![img_24.png](img_24.png)
+
 1. Пробую перезапустить кластер
 
 ```commandline
