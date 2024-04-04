@@ -1,0 +1,16 @@
+#cloud-config
+users:
+  - name: netology
+    passwd: "$6$mOUvkq5PhZlCtyID$xH3ip9AYT7vQ3c6N7jppjQWUXvJ8/cRl0iTRROFVxpZX4/709vlcyHrlk5yIO0quTEkIbWzipxXyf2XnYyzzy."
+    groups: sudo, wheel
+    shell: /bin/bash
+    lock-passwd: false
+    chpasswd: { expire: False }
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDR3XW9AeXsEqCCp8mVItD4avsHRVEuBGCuoqWOAZaffz/HObt7XBlD1oDE5LdihAdD3jOGLfUpxrOhQidNuknPHKzKmgwA3xUuwFIg/W4G/s4LAzGwfjr/PIdI6//ZH/iBQaa+sWINi19PpQNY4GRmWEHhqmg0gzhiaat+RczNzrLn6ObbMItcWo/wOazL0Kja0VnfNum5LUOD33O/z/D059Z8/RFcQSExvoh5uyRbUJBAoD96OdJW5jeRbr7b9G+jHVoSGwozdPNXxYe7rFNLM8JDbFH/Ymhup/nFkEQVyXM3tJE30knYJh/TFLAonWMYId3ODCFwfR93CKcvM1kiWLvAQBqaIVnRjcKUTUxJUUvIVg6BmvYVqGVmmGQfN+qHHHOWRsXKBgN1ADu3/cbxINtghqNCUQKrAgHQEATrf2P87R0OE3RJt2CzAZyaIYFiHBrNmsgvNIGn2T7lncqTK6Tl3llBbNPs9pzqai3osSd1+Jc1jo0HjVh3j4/CJuE=
+package_update: true
+package_upgrade: false
+packages:
+  - vim
+  - nginx
