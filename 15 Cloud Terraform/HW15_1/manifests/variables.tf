@@ -11,7 +11,7 @@ variable "a-zone" {
 }
 
 variable "nat-instance-image-id" {
-  default = "fd8dmsb2cgoabg4qelih"
+  default = "fd819fea762c283b5a4v"
 }
 
 variable "nat-instance-ip" {
